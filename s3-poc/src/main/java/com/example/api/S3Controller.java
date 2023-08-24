@@ -1,6 +1,7 @@
 package com.example.api;
 
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
+import com.example.annotation.Log;
 import com.example.model.FileInfo;
 import com.example.service.AwsS3Service;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -23,6 +24,7 @@ public class S3Controller {
     private final ObjectMapper objectMapper;
 
     @PostMapping
+    @Log
     ResponseEntity<?> uploadFile(
             @RequestPart(value = "file") MultipartFile file
     ) {
@@ -41,6 +43,7 @@ public class S3Controller {
     }
 
     @GetMapping("/download/{fileName}")
+    @Log
     ResponseEntity<?> downloadFile(@PathVariable String fileName) {
         S3ObjectInputStream inputStream = service.downloadFileFromS3Bucket(fileName);
         try {
